@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
+import java.util.Scanner;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class FinalApplicationTests {
@@ -239,5 +242,31 @@ public class FinalApplicationTests {
         assertThat(formatConverterService.convert(
                 new FormatConverterDTO("userProfile", "property", "OracleFriendlyWithPrefix")))
                 .isEqualTo("USER_PROFILE");
+    }
+
+    @Test
+    public void finalTestCases(){
+        File file;
+        Scanner scanner = null;
+        try{
+            file = new File("src/test/resources/test-cases.csv");
+            scanner = new Scanner(file);
+            scanner.nextLine();
+            while(scanner.hasNextLine()){
+                String[] testcase = scanner.nextLine().split(",");
+                for (int i = 0; i < testcase.length; i++) {
+                    testcase[i] = testcase[i].trim();
+                }
+                assertThat(formatConverterService.convert(
+                new FormatConverterDTO(testcase[0], testcase[1], testcase[2])))
+                .isEqualTo(testcase[3]);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            if(scanner != null){
+                scanner.close();
+            }
+        }
     }
 }
