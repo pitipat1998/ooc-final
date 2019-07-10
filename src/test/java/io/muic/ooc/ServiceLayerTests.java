@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class FinalApplicationTests {
+public class ServiceLayerTests {
 
     @Autowired
     private FormatConverterService formatConverterService;
